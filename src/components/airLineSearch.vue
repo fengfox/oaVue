@@ -1,15 +1,17 @@
 <template>
 	<div>
 	<div>
+		<!--
 		<mt-header title="航线搜索">
 			<router-link  to="" slot="left">
 				<mt-button icon="back" @click="$router.back(-1)" >返回</mt-button>
 
 			</router-link>
 		</mt-header>
+	-->
 	</div>
 	<div class="page-search">
-    <mt-search autofocus v-model="value" @keyup.enter.native="searchResult()">
+    <mt-search autofocus v-model="value" @keyup.enter.native="searchResult(value)">
     	<!--
     	<mt-cell
    		 v-for="item in result"
@@ -19,7 +21,7 @@
 		-->
  	   <div>
   	
-  	<mt-cell v-for="item in result" :title="item.city" :label="item.code" :to="{ path: 'airLineResult',query:{code:item.code,city:item.city}}"></mt-cell>
+  	<mt-cell v-for="item in result" :title="item.segmentName" :label="item.segmentCode" :to="{ path: 'airLineResult',query:{code:item.code,city:item.city}}"></mt-cell>
  	
   </div>
     </mt-search>
@@ -33,7 +35,7 @@
   }
 .mint-search-list-warp
  {
- 	margin-top: 60px;
+ 	//margin-top: 60px;
  }
  li
  {
@@ -44,7 +46,7 @@
 
 <script>
 
-
+import axios from 'axios'
 	export default{
 		name:'page-search',
 		data(){
@@ -62,6 +64,7 @@
 		{
 			searchResult()
 			{
+				/*
 				//console.log("确认事件");
 				this.result=[{
 					code:'CTUPEK',
@@ -71,6 +74,17 @@
 					code:'PEKGLZ',
 					city:'北京广州'
 				}];
+				*/
+				//后台获取数据
+				axios.get('http://192.168.1.105:8091/getTicketSegmentLike/CTU')
+     			.then(response=>{
+         		console.log(response);
+         		this.result=response.data.data;
+      			})
+      		.catch(error=>{
+          	console.log(error);
+          	alert('网络错误，不能访问');
+      			})
 			}
 
 
