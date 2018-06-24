@@ -1,17 +1,13 @@
 <template>
-	<div>
-	<div>
-		<!--
-		<mt-header title="航线搜索">
-			<router-link  to="" slot="left">
-				<mt-button icon="back" @click="$router.back(-1)" >返回</mt-button>
-
-			</router-link>
-		</mt-header>
-	-->
-	</div>
-	<div class="page-search">
-    <mt-search autofocus v-model="value" @keyup.enter.native="searchResult(value)">
+	         
+<div class="page-search">	
+	<mt-header title="航线查询">  
+          <router-link to= '' slot="left">  
+            <mt-button  icon="back" @click="$router.back(-1)">返回</mt-button>  
+          </router-link>		
+        </mt-header>
+        <form action="" target="frameFile">
+    <mt-search  cancel-text="取消"  v-model="value" @keyup.enter.native="searchResult(value)">
     	<!--
     	<mt-cell
    		 v-for="item in result"
@@ -19,28 +15,23 @@
    		 :value="item.city" is-link :to="{ path: 'airLineResult',query:{code:item.code,city:item.city} }">
  	 </mt-cell>
 		-->
- 	   <div>
+ 	  
   	
-  	<mt-cell v-for="item in result" :title="item.segmentName" :label="item.segmentCode" :to="{ path: 'airLineResult',query:{code:item.code,city:item.city}}"></mt-cell>
+  	<mt-cell v-for="item in result" :title="item.segmentName" :label="item.segmentCode" :to="{ path: 'airLineResult',query:{code:item.segmentCode,city:item.segmentName}}"></mt-cell>
  	
-  </div>
-    </mt-search>
-  </div>
-
-</div>
+  
+    </mt-search></form><iframe name='frameFile' style="display: none;"></iframe>
+ </div> 
 </template>
 <style>
   .page-search {
     height: 100%;
   }
-.mint-search-list-warp
+.mint-search-list
  {
- 	//margin-top: 60px;
+ 	margin-top: 80px;
  }
- li
- {
- 	list-style-type: none;
- }
+
 </style>
 
 
@@ -62,21 +53,12 @@ import axios from 'axios'
 		},
 		methods:
 		{
-			searchResult()
+			searchResult(value)
 			{
-				/*
-				//console.log("确认事件");
-				this.result=[{
-					code:'CTUPEK',
-					city:'成都北京'
-				},
-				{
-					code:'PEKGLZ',
-					city:'北京广州'
-				}];
-				*/
-				//后台获取数据
-				axios.get('http://192.168.1.105:8091/getTicketSegmentLike/CTU')
+				this.result="";
+				
+				const url ='/getTicketSegmentLike';
+				axios.get(url+'/'+value)
      			.then(response=>{
          		console.log(response);
          		this.result=response.data.data;
@@ -84,7 +66,8 @@ import axios from 'axios'
       		.catch(error=>{
           	console.log(error);
           	alert('网络错误，不能访问');
-      			})
+      			});
+      		this.show=false;
 			}
 
 

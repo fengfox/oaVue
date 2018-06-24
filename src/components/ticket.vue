@@ -12,7 +12,8 @@
   </div>  
   <div>
     <div class="part">
-	  <mt-cell title="航线管理"  is-link :to="{path:'airLine'}"></mt-cell>
+	  <mt-cell title="航线查询"  is-link :to="{path:'airLineSearch'}"></mt-cell>
+    <mt-cell title="航线增加"  is-link :to="{path:'airLineAdd'}"></mt-cell>
 	  
     </div>
   </div>

@@ -14,12 +14,12 @@
 	  <!--写content-->
 	  <div>
 
-	  	<mt-cell><input type="text" name="from" slot="title" placeholder="出发地"/></mt-cell>
-	  	<mt-cell><input type="text" name ="fromCode" slot="title" placeholder="出发地三字码"/></mt-cell>
-	  	<mt-cell><input type="text" name ="to" slot="title" placeholder="目的地"/></mt-cell>
-	  	<mt-cell><input type="text" name ="toCode" slot="title" placeholder="目的地三字码"/></mt-cell>
+	  	<mt-cell><input type="text" v-model="from"  slot="title" placeholder="出发地"/></mt-cell>
+	  	<mt-cell><input type="text" v-model ="fromCode" slot="title" placeholder="出发地三字码"/></mt-cell>
+	  	<mt-cell><input type="text" v-model ="to" slot="title" placeholder="目的地"/></mt-cell>
+	  	<mt-cell><input type="text" v-model ="toCode" slot="title" placeholder="目的地三字码"/></mt-cell>
 
-	  	<mt-button size="large" type="primary">确认</mt-button>
+	  	<mt-button size="large" type="primary" @click="addSegment()">确认</mt-button>
 	  </div>
   </div>
 </div>
@@ -27,7 +27,7 @@
 <style>
 input{
 	border:none;
-	width:50%;
+	width:100%;
 }
 </style>
 
@@ -37,8 +37,39 @@ input{
 	export default{
 		data(){
 			return{
+				to:'',
+				toCode:'',
+				from:'',
+				fromCode:'',
 				
 			};
+		},
+		methods:
+		{
+			addSegment()
+			{
+				console.log("添加事件");
+				const url ='/ticketSegmentAdd';
+				var params = new URLSearchParams();
+				params.append('from',this.from);
+				params.append('fromCode',this.fromCode);
+				params.append('to',this.to);
+				params.append('toCode',this.toCode);
+				this.$axios({
+    				method: 'post',
+   					url:url,
+    				data:params
+					}).then((response)=>{
+						if(response.data.code==0)
+						{
+								alert("添加成功");
+						}
+						else
+						{
+							alert("添加失败");
+						}
+					});
+			}
 		}
 	}
 </script>
