@@ -7,6 +7,7 @@ import AirLine from '@/components/airLine'
 import AirLineSearch from '@/components/airLineSearch'
 import AirLineResult from '@/components/airLineResult'
 import AirLineAdd from '@/components/airLineAdd'
+import Login from '@/components/login'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +42,11 @@ export default new Router({
     path:'/airLineAdd',
     name:'AirLineAdd',
     component:AirLineAdd
+  },
+    {
+    path:'/login',
+    name:'Login',
+    component:Login
   }
   ]
 })
